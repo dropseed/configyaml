@@ -9,7 +9,6 @@ class ConfigLoader(object):
     def __init__(self, config_text, context={}, *args, **kwargs):
         assert self.config_root_class is not None
 
-        self.config_root_class
         self.config_text = config_text
         self.config_dict = None
         self.config_root = None
