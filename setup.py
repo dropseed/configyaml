@@ -21,7 +21,7 @@ setup(
     long_description=readme,
     author="Dropseed",
     author_email='python@dropseed.io',
-    url='https://github.com/dropseedlabs/config_loader',
+    url='https://github.com/dropseedlabs/config-loader',
     packages=[
         'config_loader',
     ],
