@@ -1,4 +1,4 @@
-from ..loader import ConfigLoader
+from .loader import ConfigLoader
 
 
 class ConfigValidator(object):

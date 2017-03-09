@@ -1,6 +1,6 @@
 import yaml
 
-from ..errors import ConfigError
+from .errors import ConfigError
 
 
 class ConfigLoader(object):
