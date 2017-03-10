@@ -7,3 +7,4 @@ from config_loader.config import ConfigBase
 from config_loader.config import ConfigBaseList
 from config_loader.config import ConfigBaseDict
 from config_loader.config import ConfigBaseWildcardDict
+from config_loader.config import ConfigBaseChoice

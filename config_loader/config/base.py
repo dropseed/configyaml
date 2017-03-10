@@ -21,13 +21,11 @@ class ConfigBase(object):
             # then we need to revalidate with that context
             self._validate()
 
-    def _as_dict(self):
-        raise NotImplementedError
-
     def is_valid(self):
         return not self._errors
 
     def _key_name(self):
+        """The key which referred to this object"""
         # use the class name by default, lowered
         if self._key is not None:
             return self._key
@@ -35,12 +33,14 @@ class ConfigBase(object):
         return self.__class__.__name__.lower()
 
     def _path(self):
+        """String path to this object"""
         if self._parent:
             return '{}.{}'.format(self._parent._path(), self._key_name())
 
         return self._key_name()
 
     def _add_error(self, *args, **kwargs):
+        """Shortcut to add an error to this object, with line numbers"""
         if kwargs.get('node', None):
             # if node specified and not none
             error = ConfigError.create_from_yaml_node(
@@ -61,12 +61,15 @@ class ConfigBase(object):
         self._errors.append(error)
 
     def _validate(self):
+        """Run validation, save errors to object in self._errors"""
+        # class can specify it's empty obj -- list would have empty of []
         self._objs = self._empty_objs if hasattr(self, '_empty_objs') else None
         self._errors = []
 
         self._validate_type()
 
     def _validate_type(self):
+        """Validation to ensure value is the correct type"""
         if not isinstance(self._value, self._type):
             title = '{} has an invalid type'.format(self._key_name())
             description = '{} must be a {}'.format(self._key_name(), self._type.__name__)
