@@ -1,5 +1,5 @@
 from config_loader.loader import ConfigLoader
-from config_loader.config.base import ConfigBaseWildcardDict
+from config_loader.config import ConfigBaseWildcardDict
 
 
 class DummyConfig(ConfigBaseWildcardDict):
