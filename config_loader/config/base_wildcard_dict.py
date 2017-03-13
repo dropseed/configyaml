@@ -3,13 +3,21 @@ from .base_dict import ConfigBaseDict
 
 class ConfigBaseWildcardDict(ConfigBaseDict):
     def _validate_value(self):
-        for key in self._value.keys():
+        for key, value in self._value.items():
             # where key name doesn't matter (ex. groups)
-            field_class = self._dict_fields['*']['class']
-            field = field_class(value=self._value[key], value_node=self._find_node_for_key_value(key), context=self._context, key=key, parent=self)
+            key_valid, explanation = self._key_name_is_valid(key)
+            if key_valid:
+                field_class = self._dict_fields['*']['class']
+                field = field_class(value=value, value_node=self._find_node_for_key_value(key), context=self._context, key=key, parent=self)
 
-            # don't set __dict__ if they can use any key
-            self._children[key] = field
+                # don't set __dict__ if they can use any key
+                self._children[key] = field
+            else:
+                self._add_error(
+                    node=self._find_node_for_key(key),
+                    title='Invalid field name',
+                    description=explanation
+                )
 
     def _as_dict(self):
         d = {}
@@ -22,3 +30,12 @@ class ConfigBaseWildcardDict(ConfigBaseDict):
         d.update(self._as_dict_to_inject())
 
         return d
+
+    def _key_name_is_valid(self, key):
+        if key == '*':
+            return False, 'Field name cannot be "*"'
+
+        if key.startswith('_'):
+            return False, 'Cannot start field name with a "_"'
+
+        return True, 'Valid'

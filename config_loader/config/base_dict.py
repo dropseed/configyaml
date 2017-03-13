@@ -8,29 +8,12 @@ class ConfigBaseDict(ConfigBase):
         super(ConfigBaseDict, self).__init__(*args, **kwargs)
 
     def _validate_value(self):
-        keys = self._value.keys()
-        available_keys = self._dict_fields.keys()  # in python3 doesn't return a true list, dict_keys set-like obj instead
+        self._validate_required_keys()
+        self._set_default_fields()
 
-        # TODO could check len(keys) > 0
-        # any point in having empty dicts
+        for key, value in self._value.items():
 
-        def valid_key_name(key):
-            if key == '*':
-                return False, 'Name cannot be "*"'
-
-            if key.startswith('_'):
-                return False, 'Cannot start name with a "_"'
-
-            return True, 'Valid'
-
-        # assign defaults first
-        for k in available_keys:
-            self.__dict__[k] = self._dict_fields[k]['class'](value={})
-            self._children[k] = self._dict_fields[k]['class'](value={})
-
-        for key in keys:
-            is_valid, is_valid_explanation = valid_key_name(key)
-            if key in available_keys and is_valid:
+            if key in self._dict_fields:
                 # get class for key
                 field_class = self._dict_fields[key]['class']
                 field = field_class(value=self._value[key], value_node=self._find_node_for_key_value(key), context=self._context, parent=self)
@@ -39,20 +22,30 @@ class ConfigBaseDict(ConfigBase):
                 # these will only be keys we specify, so should be safe names
                 self.__dict__[key] = field
                 self._children[key] = field
-
-            elif not is_valid:
-                self._add_error(
-                    node=self._find_node_for_key(key),
-                    title='Invalid key name',
-                    description=is_valid_explanation,
-                )
             else:
                 # cannot use key
                 self._add_error(
                     node=self._find_node_for_key(key),
                     title='Invalid key',
-                    description='Available fields are: {}'.format(available_keys),
+                    description='Available fields are: {}'.format(self._dict_fields.keys()),
                 )
+
+    def _validate_required_keys(self):
+        required_keys = [k for k, v in self._dict_fields.items() if v.get('required', False)]
+        for k in required_keys:
+            if k not in self._value:
+                self._add_error(
+                    title='Required field is missing',
+                    description='{} is a required field'.format(k)
+                )
+
+    def _set_default_fields(self):
+        for k, v in self._dict_fields.items():
+            default = v.get('default', None)
+            if default is not None:
+                instance = v['class'](value=default)
+                self.__dict__[k] = instance
+                self._children[k] = instance
 
     def _find_node_for_key_value(self, key):
         if not self._value_node:
