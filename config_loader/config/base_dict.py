@@ -4,15 +4,10 @@ from .base import ConfigBase
 class ConfigBaseDict(ConfigBase):
     def __init__(self, *args, **kwargs):
         self._type = dict
-        self._empty_objs = {}
+        self._children = {}
         super(ConfigBaseDict, self).__init__(*args, **kwargs)
 
-    def _validate(self):
-        super(ConfigBaseDict, self)._validate()
-
-        if not self.is_valid():
-            return
-
+    def _validate_value(self):
         keys = self._value.keys()
         available_keys = self._dict_fields.keys()  # in python3 doesn't return a true list, dict_keys set-like obj instead
 
@@ -31,7 +26,7 @@ class ConfigBaseDict(ConfigBase):
         # assign defaults first
         for k in available_keys:
             self.__dict__[k] = self._dict_fields[k]['class'](value={})
-            self._objs[k] = self._dict_fields[k]['class'](value={})
+            self._children[k] = self._dict_fields[k]['class'](value={})
 
         for key in keys:
             is_valid, is_valid_explanation = valid_key_name(key)
@@ -39,12 +34,11 @@ class ConfigBaseDict(ConfigBase):
                 # get class for key
                 field_class = self._dict_fields[key]['class']
                 field = field_class(value=self._value[key], value_node=self._find_node_for_key_value(key), context=self._context, parent=self)
-                self._errors = self._errors + field._errors
 
                 # set self.FIELD_NAME so we can get children directly
                 # these will only be keys we specify, so should be safe names
                 self.__dict__[key] = field
-                self._objs[key] = field
+                self._children[key] = field
 
             elif not is_valid:
                 self._add_error(
@@ -86,18 +80,19 @@ class ConfigBaseDict(ConfigBase):
         return None
 
     def __getitem__(self, key):
-        return self._objs[key]
+        return self._children[key]
 
     def __len__(self):
-        return len(self._objs)
+        return len(self._children)
 
     def _as_dict(self):
         d = {}
         for k in self._dict_fields.keys():
             d[k] = self[k]._as_dict()
 
-        d['errors'] = [x.as_dict() for x in self._errors]
-        d['valid'] = self.is_valid()
+        if self._errors:
+            d['errors'] = [x.as_dict() for x in self._errors]
+
         d.update(self._as_dict_to_inject())
 
         return d

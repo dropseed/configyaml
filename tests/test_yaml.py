@@ -76,7 +76,7 @@ line_c: 8"""
                                         'start_column': 8,
                                         'start_line': 1,
                                         'title': 'Basic YAML parsing error'}],
-                                'valid': False}
+                                }
 
 
 

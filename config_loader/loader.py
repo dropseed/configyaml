@@ -53,12 +53,13 @@ class ConfigLoader(object):
         return self.config_dict[key]
 
     def as_dict(self):
-        return {
+        d = {
             'config_text': self.config_text,
             'config': self.config_root._as_dict() if self.config_root else None,
-            'errors': [x.as_dict() for x in self.errors],
-            'valid': self.is_valid(),
         }
+        if self.errors:
+            d['errors'] = [x.as_dict() for x in self.errors]
+        return d
 
     def as_text(self, simple=False):
         if self.is_valid():

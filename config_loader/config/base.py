@@ -4,7 +4,7 @@ from ..errors import ConfigError
 class ConfigBase(object):
     def __init__(self, value, value_node=None, context={}, *args, **kwargs):
         self._value = value
-        self._value_node = value_node
+        self._value_node = value_node  # yaml node obj
         self._context = context
 
         # optionally pass in the name that this setting was under
@@ -63,10 +63,12 @@ class ConfigBase(object):
     def _validate(self):
         """Run validation, save errors to object in self._errors"""
         # class can specify it's empty obj -- list would have empty of []
-        self._objs = self._empty_objs if hasattr(self, '_empty_objs') else None
         self._errors = []
 
         self._validate_type()
+
+        if self.is_valid():
+            self._validate_value()
 
     def _validate_type(self):
         """Validation to ensure value is the correct type"""
@@ -75,6 +77,10 @@ class ConfigBase(object):
             description = '{} must be a {}'.format(self._key_name(), self._type.__name__)
 
             self._add_error(title=title, description=description)
+
+    def _validate_value(self):
+        """Do custom validation here, only runs if valid up to this point"""
+        pass
 
     def _context_to_inject(self):
         """An optional dictionary of context to be injected into children"""
@@ -85,9 +91,8 @@ class ConfigBase(object):
         return {}
 
     def _as_dict(self):
-        d = {
-            'value': self._value,
-            'errors': [x.as_dict() for x in self._errors],
-        }
+        d = {'value': self._value}
+        if self._errors:
+            d['errors'] = [x.as_dict() for x in self._errors]
         d.update(self._as_dict_to_inject())
         return d
