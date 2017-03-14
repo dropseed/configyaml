@@ -60,6 +60,22 @@ class ConfigBase(object):
 
         self._errors.append(error)
 
+    def _get_descendants_errors(self):
+        """Recursively get errors from descendants"""
+        descendants_errors = []
+        if hasattr(self, '_children'):
+            if isinstance(self._children, (list, tuple)):
+                for c in self._children:
+                    descendants_errors += c._get_all_errors()
+            elif isinstance(self._children, dict):
+                for c in self._children.values():
+                    descendants_errors += c._get_all_errors()
+
+        return descendants_errors
+
+    def _get_all_errors(self):
+        return self._errors + self._get_descendants_errors()
+
     def _validate(self):
         """Run validation, save errors to object in self._errors"""
         # class can specify it's empty obj -- list would have empty of []

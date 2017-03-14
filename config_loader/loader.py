@@ -43,7 +43,7 @@ class ConfigLoader(object):
             node_tree = yaml.compose(self.config_text)
             # give it the parsed settings, and the node info
             self.config_root = self.config_root_class(value=self.config_dict, value_node=node_tree, context=self.variable_context)
-            self.errors = self.errors + self.config_root._errors
+            self.errors = self.errors + self.config_root._get_all_errors()
 
     def is_valid(self):
         return not self.errors
