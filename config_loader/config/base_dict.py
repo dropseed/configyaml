@@ -27,7 +27,7 @@ class ConfigBaseDict(ConfigBase):
                 self._add_error(
                     node=self._find_node_for_key(key),
                     title='Invalid key',
-                    description='Available fields are: {}'.format(self._dict_fields.keys()),
+                    description='Available fields are: {}'.format(', '.join(self._dict_fields.keys())),
                 )
 
     def _validate_required_keys(self):

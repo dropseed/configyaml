@@ -11,5 +11,5 @@ class ConfigBaseChoice(ConfigBase):
         if self._value not in self._choices:
             self._add_error(
                 title='Invalid choice',
-                description='Must be one of {}'.format(self._choices),
+                description='Must be one of {}'.format(', '.join(self._choices)),
             )
