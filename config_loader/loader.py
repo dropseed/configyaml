@@ -93,5 +93,5 @@ class ConfigLoader(object):
                             )
                             output.append(error_str)
 
-            text = '\n'.join(output)
+            text = '\n'.join([str(x) for x in output])
             return text
