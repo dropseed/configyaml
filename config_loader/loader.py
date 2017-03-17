@@ -14,7 +14,7 @@ class ConfigLoader(object):
         self.config_root = None
         self.variable_context = context
 
-        self.errors = []
+        self._errors = []
         self.load()
 
     def load(self):
@@ -27,7 +27,7 @@ class ConfigLoader(object):
         """
 
         if not self.config_text.strip():
-            self.errors.append(ConfigError(title='YAML is empty', description='Your configuration file appears to be empty.'))
+            self._errors.append(ConfigError(title='YAML is empty', description='Your configuration file appears to be empty.'))
             return
 
         # simple way to check that yaml itself is valid
@@ -35,7 +35,7 @@ class ConfigLoader(object):
             self.config_dict = yaml.load(self.config_text)
         except yaml.YAMLError as e:
             error = ConfigError.create_from_yaml_error(e)
-            self.errors.append(error)
+            self._errors.append(error)
             # could have more than 1 line, keep giong
 
         if self.config_dict:
@@ -43,7 +43,13 @@ class ConfigLoader(object):
             node_tree = yaml.compose(self.config_text)
             # give it the parsed settings, and the node info
             self.config_root = self.config_root_class(value=self.config_dict, value_node=node_tree, context=self.variable_context)
-            self.errors = self.errors + self.config_root._get_all_errors()
+
+    @property
+    def errors(self):
+        if self.config_root:
+            return self._errors + self.config_root._get_all_errors()
+
+        return self._errors
 
     def is_valid(self):
         return not self.errors
