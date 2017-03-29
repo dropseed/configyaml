@@ -61,11 +61,11 @@ line_c: 8"""
 
     assert config.as_text() == """line_a: True
 line_b: !2
-        ^
---------
-Basic YAML parsing error
-- could not determine a constructor for the tag '!2'
---------
+#       ^
+# --------
+# Basic YAML parsing error
+# - could not determine a constructor for the tag '!2'
+# --------
 line_c: 8"""
 
     assert config.as_dict() == {'config': None,
