@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from config_loader.loader import ConfigLoader
 from config_loader.config import ConfigBaseChoice
 

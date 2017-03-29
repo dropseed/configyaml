@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from config_loader.loader import ConfigLoader
 from config_loader.config import ConfigBaseWildcardDict
 
@@ -67,6 +69,8 @@ line_b: !2
 # - could not determine a constructor for the tag '!2'
 # --------
 line_c: 8"""
+
+    assert isinstance(config.as_text(), unicode)
 
     assert config.as_dict() == {'config': None,
                                 'config_text': 'line_a: True\nline_b: !2\nline_c: 8',

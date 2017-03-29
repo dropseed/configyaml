@@ -1,3 +1,6 @@
+from __future__ import unicode_literals
+
+
 class ConfigError(object):
     def __init__(self, title, description=None, line=None, column=None, *args, **kwargs):
         self.title = title
