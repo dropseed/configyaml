@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import yaml
 
 from .errors import ConfigError
@@ -88,12 +89,12 @@ class ConfigLoader(object):
                         for e in errors_on_line:
                             num_markers = 1 if not e.end_column else e.end_column - e.start_column
                             markers = '^' * num_markers
-                            error_str = """{markers}
---------
-{title}
-- {description}
---------""".format(
-                                markers=markers.rjust(e.start_column + 1),
+                            error_str = """# {markers}
+# --------
+# {title}
+# - {description}
+# --------""".format(
+                                markers=markers.rjust(e.start_column - 1),  # negative offset due to yaml commenting
                                 title=e.title,
                                 description=e.description,
                             )
