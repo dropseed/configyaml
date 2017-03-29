@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+import sys
 
 from config_loader.loader import ConfigLoader
 from config_loader.config import ConfigBaseWildcardDict
@@ -70,7 +71,11 @@ line_b: !2
 # --------
 line_c: 8"""
 
-    assert isinstance(config.as_text(), unicode)
+    # We want to make sure we're getting unicode back
+    if sys.version_info.major < 3:
+        assert isinstance(config.as_text(), unicode)
+    else:
+        assert isinstance(config.as_text(), str)
 
     assert config.as_dict() == {'config': None,
                                 'config_text': 'line_a: True\nline_b: !2\nline_c: 8',
