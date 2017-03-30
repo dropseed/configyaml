@@ -58,7 +58,7 @@ test-all: ## run tests on every Python version with tox
 	tox
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source config_loader -m pytest
+	coverage run --source config_loader -m pytest tests
 
 		coverage report -m
 		coverage html
