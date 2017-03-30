@@ -54,9 +54,8 @@ def test_list_attr():
 
 def test_assert_on_missing_list_item_class():
     class InvalidConfigList(ConfigBaseList):
-        def __init__(self, *args, **kwargs):
-            super(InvalidConfigList, self).__init__(*args, **kwargs)
+        pass
 
+    value = ['a', 'b']
     with pytest.raises(AttributeError):
-        value = ['a', 'b']
         config = InvalidConfigList(value=value)
