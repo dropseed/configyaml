@@ -1,6 +1,9 @@
 from __future__ import unicode_literals
 import sys
 
+from config_loader.config import ConfigBase
+from config_loader.config import ConfigBaseDict
+from config_loader.config import ConfigBaseList
 from config_loader.loader import ConfigLoader
 from config_loader.config import ConfigBaseWildcardDict
 
@@ -87,33 +90,6 @@ line_c: 8"""
                                         'title': 'Basic YAML parsing error'}],
                                 }
 
-
-
-# def test_multiple_invalid_lines():
-#     text = """line_a: True
-# line_b: !2
-# line_c: 8
-# line_d: !9
-#     """
-#
-#     config = DummyLoader(text)
-#
-#     assert not config.is_valid()
-#     assert len(config.errors) == 2
-#
-#     error = config.errors[0]
-#     assert error.title == 'Basic YAML parsing error'
-#     assert error.description == "could not determine a constructor for the tag '!2'"
-#     assert error.line == 1  # 2
-#     assert error.column == 8  # 9
-#
-#     error = config.errors[1]
-#     assert error.title == 'Basic YAML parsing error'
-#     assert error.description == 'More info...'
-#     assert error.line == 1  # 2
-#     assert error.column == 8  # 9
-
-
 def test_empty_yaml():
     text = """
 
@@ -131,3 +107,79 @@ def test_empty_yaml():
 
 
 # can you use mutiple docs? http://pyyaml.org/wiki/PyYAMLDocumentation#LoadingYAML
+
+
+class StringType(ConfigBase):
+    def __init__(self, *args, **kwargs):
+        self._type = str
+        super(StringType, self).__init__(*args, **kwargs)
+
+
+class ProjectDict(ConfigBaseDict):
+    def __init__(self, *args, **kwargs):
+        self._dict_fields = {
+            'github': {
+                'class': StringType,
+                'required': True,
+            },
+        }
+        super(ProjectDict, self).__init__(*args, **kwargs)
+
+
+class ProjectList(ConfigBaseList):
+    def __init__(self, *args, **kwargs):
+        self._list_items_class = ProjectDict
+        self._min_items_required = 1
+        super(ProjectList, self).__init__(*args, **kwargs)
+
+
+class BaseConfig(ConfigBaseDict):
+    def __init__(self, *args, **kwargs):
+        self._dict_fields = {
+            'projects': {
+                'class': ProjectList,
+                'required': True,
+            },
+            'notifications': {
+                'class': ProjectList,
+                'required': True,
+            },
+        }
+        super(BaseConfig, self).__init__(*args, **kwargs)
+
+
+class ProjectLoader(ConfigLoader):
+    config_root_class = BaseConfig
+
+
+def test_multiple_invalid_lines():
+    text = """\
+deadbeef: deadbeef
+alist:
+    - one
+    - two
+    - three"""
+
+    config = ProjectLoader(text)
+    assert not config.is_valid()
+
+    expected_error = """\
+deadbeef: deadbeef
+# ^
+# --------
+# Invalid key
+# - Available fields are: notifications, projects
+# Required field is missing
+# - notifications is a required field
+# - projects is a required field
+# --------
+alist:
+# ^^^^^
+# --------
+# Invalid key
+# - Available fields are: notifications, projects
+# --------
+    - one
+    - two
+    - three"""
+    assert expected_error == config.as_text()

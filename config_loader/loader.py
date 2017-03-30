@@ -86,7 +86,20 @@ class ConfigLoader(object):
                     output.append(line)
                     if index in errored_lines:
                         errors_on_line = [x for x in self.errors if x.line == index]
-                        for e in errors_on_line:
+                        # If there is more than one error on a line, try to group them by title and place in a
+                        # single comment block
+                        if len(errors_on_line) > 1:
+                            error_str = """# ^\n# --------\n"""
+                            unique_titles = set([x.title for x in errors_on_line])
+
+                            for t in sorted(unique_titles):
+                                error_str += """# {title}\n""".format(title=t)
+                                for e in [x for x in errors_on_line if x.title == t]:
+                                    error_str += """# - {description}\n""".format(description=e.description)
+
+                            error_str += """# --------"""
+                        else:
+                            e = errors_on_line[0]
                             num_markers = 1 if not e.end_column else e.end_column - e.start_column
                             markers = '^' * num_markers
                             error_str = """# {markers}
@@ -98,7 +111,7 @@ class ConfigLoader(object):
                                 title=e.title,
                                 description=e.description,
                             )
-                            output.append(error_str)
+                        output.append(error_str)
 
             text = '\n'.join([str(x) for x in output])
             return text
