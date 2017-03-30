@@ -94,8 +94,8 @@ class ConfigLoader(object):
 
                             for t in sorted(unique_titles):
                                 error_str += """# {title}\n""".format(title=t)
-                                for e in [x for x in errors_on_line if x.title == t]:
-                                    error_str += """# - {description}\n""".format(description=e.description)
+                                for d in sorted([x.description for x in errors_on_line if x.title == t]):
+                                    error_str += """# - {description}\n""".format(description=d)
 
                             error_str += """# --------"""
                         else:
