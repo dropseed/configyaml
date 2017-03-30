@@ -67,7 +67,8 @@ line_c: 8"""
 
     assert config.as_text() == """line_a: True
 line_b: !2
-#       ^
+# line_b: !2
+#         ^
 # --------
 # Basic YAML parsing error
 # - could not determine a constructor for the tag '!2'
@@ -165,6 +166,7 @@ alist:
 
     expected_error = """\
 deadbeef: deadbeef
+# deadbeef: deadbeef
 # ^
 # --------
 # Invalid key
@@ -174,6 +176,7 @@ deadbeef: deadbeef
 # - projects is a required field
 # --------
 alist:
+# alist:
 # ^^^^^
 # --------
 # Invalid key
