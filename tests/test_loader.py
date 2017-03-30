@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import pytest
+
 from config_loader.config import ConfigBaseList
 from config_loader.loader import ConfigLoader
 from config_loader.config import ConfigBaseDict
@@ -77,3 +79,12 @@ def test_as_dict_with_lists():
     assert loader.is_valid()
     assert loader.as_dict()['config'] == {'foo': {'items': [{'value': 'x'}, {'value': 'y'}]}, 'bar': {'value': 'deadbeef'}}
 # def test_list_error_propogation():
+
+
+def test_asserts_on_invalid_subclass():
+    class InvalidLoader(ConfigLoader):
+        pass
+
+    value = ['a', 'b']
+    with pytest.raises(AttributeError):
+        InvalidLoader(value)

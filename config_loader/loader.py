@@ -8,7 +8,7 @@ class ConfigLoader(object):
     config_root_class = None
 
     def __init__(self, config_text, context={}, *args, **kwargs):
-        if not hasattr(self, 'config_root_class'):
+        if not self.config_root_class:
             raise AttributeError('config_root_class must defined in subclasses of ConfigLoader')
 
         self.config_text = config_text
