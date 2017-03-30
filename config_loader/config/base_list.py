@@ -11,6 +11,9 @@ class ConfigBaseList(ConfigBase):
             # set to 1 in custom __init__ to require at least 1 item
             self._min_items_required = 0
 
+        if not hasattr(self, '_list_item_class'):
+            raise AttributeError('_list_item_class must be defined in subclasses of ConfigBaseList')
+
         super(ConfigBaseList, self).__init__(*args, **kwargs)
 
     def _validate_value(self):
