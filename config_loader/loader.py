@@ -26,6 +26,8 @@ class ConfigLoader(object):
           getting objects out of those, processing grammar if necessary, validating other settings
           errors coming all the way back up
         """
+        if not isinstance(self.config_text, str):
+            self.config_text = self.config_text.decode('utf-8')
 
         if not self.config_text.strip():
             self._errors.append(ConfigError(title='YAML is empty', description='Your configuration file appears to be empty.'))
