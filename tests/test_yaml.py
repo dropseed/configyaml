@@ -84,12 +84,55 @@ line_c: 8"""
     assert config.as_dict() == {'config': None,
                                 'config_text': 'line_a: True\nline_b: !2\nline_c: 8',
                                 'errors': [{'description': "could not determine a constructor for the tag '!2'",
+                                            'end_column': None,
+                                            'end_line': None,
+                                            'start_column': 8,
+                                            'start_line': 1,
+                                            'title': 'Basic YAML parsing error'}],
+                                }
+
+def test_bytes_in_unicode_out():
+    text = """line_a: True
+line_b: !2
+line_c: 8"""
+
+    config = DummyLoader(text.encode('utf-8'))
+
+    assert not config.is_valid()
+    assert len(config.errors) == 1
+
+    error = config.errors[0]
+    assert error.title == 'Basic YAML parsing error'
+    assert error.description == "could not determine a constructor for the tag '!2'"
+    assert error.line == 1  # 2
+    assert error.column == 8  # 9
+
+    assert config.as_text() == """line_a: True
+line_b: !2
+# line_b: !2
+#         ^
+# --------
+# Basic YAML parsing error
+# - could not determine a constructor for the tag '!2'
+# --------
+line_c: 8"""
+
+    # We want to make sure we're getting unicode back
+    if sys.version_info.major < 3:
+        assert isinstance(config.as_text(), unicode)
+    else:
+        assert isinstance(config.as_text(), str)
+
+    assert config.as_dict() == {'config': None,
+                                'config_text': 'line_a: True\nline_b: !2\nline_c: 8',
+                                'errors': [{'description': "could not determine a constructor for the tag '!2'",
                                         'end_column': None,
                                         'end_line': None,
                                         'start_column': 8,
                                         'start_line': 1,
                                         'title': 'Basic YAML parsing error'}],
                                 }
+
 
 def test_empty_yaml():
     text = """
