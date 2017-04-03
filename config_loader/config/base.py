@@ -32,6 +32,12 @@ class ConfigBase(object):
 
         return self.__class__.__name__.lower()
 
+    def __nonzero__(self):
+        return True
+
+    def __bool__(self):
+        return True
+
     def _path(self):
         """String path to this object"""
         if self._parent:

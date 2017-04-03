@@ -57,6 +57,14 @@ def test_normal():
     assert hasattr(config, 'foo')
 
 
+def test_invalid_key():
+    value = {'bar': 'baz'}
+    config = DummyConfig(value=value)
+    assert not config.is_valid()
+    assert config._errors[0].title == 'Invalid key'
+    assert not hasattr(config, 'bar')
+
+
 def test_required():
     value = {}
     config = DummyConfigRequired(value=value)
@@ -78,3 +86,10 @@ def test_default():
     config = DummyConfigDefault(value=value)
     assert config.is_valid()
     assert config.foo._value == 'bar'
+
+
+def test_get_item():
+    value = {'foo': 'bar'}
+    config = DummyConfig(value=value)
+    assert config.is_valid()
+    assert config['foo']._value == 'bar'
