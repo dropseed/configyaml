@@ -64,12 +64,19 @@ def test_dict_error_propogation():
     assert len(loader.config_root.foo._get_descendants_errors()) == 0
     assert len(loader.config_root.foo._get_all_errors()) == 1
 
-
-def test_as_dict():
+def test_valid_as_dict():
     value = "{ 'foo': 'bar'}"
     loader = DummyLoader(value)
     assert loader.is_valid()
-    assert loader.as_dict()['config'] == {'foo': {'value':'bar'}}
+    assert loader.as_dict()['config'] == {'foo': {'value': 'bar'}}
+
+
+def test_valid_as_text():
+    value = "{ 'foo': 'bar'}"
+    loader = DummyLoader(value)
+    assert loader.is_valid()
+    assert loader.as_text() == value
+
 
 def test_as_dict_with_lists():
     value = "{ 'foo': ['x', 'y'], 'bar': 'deadbeef'}"

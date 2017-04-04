@@ -70,7 +70,7 @@ class ConfigLoader(object):
             d['errors'] = [x.as_dict() for x in self.errors]
         return d
 
-    def as_text(self, simple=False):
+    def as_text(self):
         if self.is_valid():
             return self.config_text
 
@@ -79,43 +79,37 @@ class ConfigLoader(object):
             errored_lines = set([x.line for x in self.errors])
 
             for index, line in enumerate(self.config_text.splitlines()):
-                if simple:
-                    if index in errored_lines:
-                        output.append('{}  # FIXME <url>'.format(line))
+                output.append(line)
+                if index in errored_lines:
+                    errors_on_line = [x for x in self.errors if x.line == index]
+                    # If there is more than one error on a line, try to group them by title and place in a
+                    # single comment block
+                    if len(errors_on_line) > 1:
+                        error_str = """# {line}\n# ^\n# --------\n""".format(line=line)
+                        unique_titles = set([x.title for x in errors_on_line])
+
+                        for t in sorted(unique_titles):
+                            error_str += """# {title}\n""".format(title=t)
+                            for d in sorted([x.description for x in errors_on_line if x.title == t]):
+                                error_str += """# - {description}\n""".format(description=d)
+
+                        error_str += """# --------"""
                     else:
-                        output.append(line)
-                else:
-                    output.append(line)
-                    if index in errored_lines:
-                        errors_on_line = [x for x in self.errors if x.line == index]
-                        # If there is more than one error on a line, try to group them by title and place in a
-                        # single comment block
-                        if len(errors_on_line) > 1:
-                            error_str = """# {line}\n# ^\n# --------\n""".format(line=line)
-                            unique_titles = set([x.title for x in errors_on_line])
-
-                            for t in sorted(unique_titles):
-                                error_str += """# {title}\n""".format(title=t)
-                                for d in sorted([x.description for x in errors_on_line if x.title == t]):
-                                    error_str += """# - {description}\n""".format(description=d)
-
-                            error_str += """# --------"""
-                        else:
-                            e = errors_on_line[0]
-                            num_markers = 1 if not e.end_column else e.end_column - e.start_column
-                            markers = '^' * num_markers
-                            error_str = """\
+                        e = errors_on_line[0]
+                        num_markers = 1 if not e.end_column else e.end_column - e.start_column
+                        markers = '^' * num_markers
+                        error_str = """\
 # {line}
 # {markers}
 # --------
 # {title}
 # - {description}
 # --------""".format(           line=line,
-                                markers=markers.rjust(e.start_column + 1),
-                                title=e.title,
-                                description=e.description,
-                            )
-                        output.append(error_str)
+                            markers=markers.rjust(e.start_column + 1),
+                            title=e.title,
+                            description=e.description,
+                        )
+                    output.append(error_str)
 
             text = '\n'.join([str(x) for x in output])
             return text
