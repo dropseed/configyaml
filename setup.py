@@ -20,7 +20,7 @@ test_requirements = [
 ]
 
 setup(
-    name='config_loader',
+    name='configyaml',
     version='0.1.0',
     description="A config loading and parsing package",
     long_description=readme + '\n\n' + history,
@@ -28,20 +28,20 @@ setup(
     author_email='python@dropseed.io',
     url='https://github.com/dropseedlabs/config-loader',
     packages=[
-        'config_loader',
+        'configyaml',
     ],
-    package_dir={'config_loader':
-                 'config_loader'},
+    package_dir={'configyaml':
+                 'configyaml'},
     entry_points={
         'console_scripts': [
-            'config_loader=config_loader.cli:main'
+            'configyaml=configyaml.cli:main'
         ]
     },
     include_package_data=True,
     install_requires=requirements,
     license="MIT license",
     zip_safe=False,
-    keywords='config_loader',
+    keywords='configyaml',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',

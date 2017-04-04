@@ -1,4 +1,4 @@
-config_loader package
+configyaml package
 =====================
 
 Subpackages
@@ -6,47 +6,47 @@ Subpackages
 
 .. toctree::
 
-    config_loader.config
+    configyaml.config
 
 Submodules
 ----------
 
-config_loader.cli module
+configyaml.cli module
 ------------------------
 
-.. automodule:: config_loader.cli
+.. automodule:: configyaml.cli
     :members:
     :undoc-members:
     :show-inheritance:
 
-config_loader.config_loader module
+configyaml.configyaml module
 ----------------------------------
 
-.. automodule:: config_loader.config_loader
+.. automodule:: configyaml.configyaml
     :members:
     :undoc-members:
     :show-inheritance:
 
-config_loader.errors module
+configyaml.errors module
 ---------------------------
 
-.. automodule:: config_loader.errors
+.. automodule:: configyaml.errors
     :members:
     :undoc-members:
     :show-inheritance:
 
-config_loader.loader module
+configyaml.loader module
 ---------------------------
 
-.. automodule:: config_loader.loader
+.. automodule:: configyaml.loader
     :members:
     :undoc-members:
     :show-inheritance:
 
-config_loader.validator module
+configyaml.validator module
 ------------------------------
 
-.. automodule:: config_loader.validator
+.. automodule:: configyaml.validator
     :members:
     :undoc-members:
     :show-inheritance:
@@ -55,7 +55,7 @@ config_loader.validator module
 Module contents
 ---------------
 
-.. automodule:: config_loader
+.. automodule:: configyaml
     :members:
     :undoc-members:
     :show-inheritance:

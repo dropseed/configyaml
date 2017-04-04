@@ -2,19 +2,19 @@ from __future__ import unicode_literals
 
 import pytest
 
-from config_loader.config import ConfigBaseList
-from config_loader.loader import ConfigLoader
-from config_loader.config import ConfigBaseDict
-from config_loader.config import ConfigBase
+from configyaml.config import ListNode
+from configyaml.loader import ConfigLoader
+from configyaml.config import DictNode
+from configyaml.config import AbstractNode
 
 
-class DummyFoo(ConfigBase):
+class DummyFoo(AbstractNode):
     def __init__(self, *args, **kwargs):
         self._type = str
         super(DummyFoo, self).__init__(*args, **kwargs)
 
 
-class DummyConfig(ConfigBaseDict):
+class DummyConfig(DictNode):
     def __init__(self, *args, **kwargs):
         self._dict_fields = {
             'foo': {
@@ -28,11 +28,11 @@ class DummyLoader(ConfigLoader):
     config_root_class = DummyConfig
 
 
-class DummyComplexConfig(ConfigBaseDict):
+class DummyComplexConfig(DictNode):
     def __init__(self, *args, **kwargs):
         self._dict_fields = {
             'foo': {
-                'class': DummyMinConfigList,
+                'class': DummyMinConfigListNode,
             },
             'bar': {
                 'class': DummyFoo,
@@ -41,11 +41,11 @@ class DummyComplexConfig(ConfigBaseDict):
         super(DummyComplexConfig, self).__init__(*args, **kwargs)
 
 
-class DummyMinConfigList(ConfigBaseList):
+class DummyMinConfigListNode(ListNode):
     def __init__(self, *args, **kwargs):
         self._min_items_required = 1
         self._list_item_class = DummyFoo
-        super(DummyMinConfigList, self).__init__(*args, **kwargs)
+        super(DummyMinConfigListNode, self).__init__(*args, **kwargs)
 
 
 class DummyComplexLoader(ConfigLoader):

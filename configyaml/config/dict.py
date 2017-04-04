@@ -1,11 +1,11 @@
-from .base import ConfigBase
+from .base import AbstractNode
 
 
-class ConfigBaseDict(ConfigBase):
+class DictNode(AbstractNode):
     def __init__(self, *args, **kwargs):
         self._type = dict
         self._children = {}
-        super(ConfigBaseDict, self).__init__(*args, **kwargs)
+        super(DictNode, self).__init__(*args, **kwargs)
 
     def _validate_value(self):
         self._validate_required_keys()

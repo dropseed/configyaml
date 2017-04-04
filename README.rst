@@ -1,4 +1,4 @@
-config_loader
+configyaml
 =============
 .. image:: https://travis-ci.org/dropseedlabs/config-loader.svg?branch=master
    :target: https://travis-ci.org/dropseedlabs/config-loader
@@ -11,7 +11,7 @@ You need a loader:
 
 .. code-block:: python
 
-    from config_loader import loader
+    from configyaml import loader
 
     from .config.root import Root
 
@@ -23,12 +23,12 @@ Then design your config using additional classes. You need at least 1 to serve a
 
 .. code-block:: python
 
-    from config_loader.config import ConfigBaseDict
+    from configyaml.config import DictNode
     from .dependencies import Dependencies
     from .notifications import Notifications
 
 
-    class Root(ConfigBaseDict):
+    class Root(DictNode):
         """Root of the yaml file"""
 
         def __init__(self, *args, **kwargs):

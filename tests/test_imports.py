@@ -1,10 +1,13 @@
 # everything here should import correctly
 
-from config_loader.loader import ConfigLoader
-from config_loader.validator import ConfigValidator
+from configyaml.loader import ConfigLoader
+from configyaml.validator import ConfigValidator
 
-from config_loader.config import ConfigBase
-from config_loader.config import ConfigBaseList
-from config_loader.config import ConfigBaseDict
-from config_loader.config import ConfigBaseWildcardDict
-from config_loader.config import ConfigBaseChoice
+from configyaml.config import AbstractNode
+from configyaml.config import ListNode
+from configyaml.config import DictNode
+from configyaml.config import ChoiceNode
+from configyaml.config import IntegerNode
+from configyaml.config import PositiveIntegerNode
+from configyaml.config import StringNode
+from configyaml.config import WildcardDictNode

@@ -1,17 +1,16 @@
 from __future__ import unicode_literals
 
-from config_loader.loader import ConfigLoader
-from config_loader.config import ConfigBaseDict
-from config_loader.config import ConfigBase
+from configyaml.config import DictNode
+from configyaml.config import AbstractNode
 
 
-class DummyFoo(ConfigBase):
+class DummyFoo(AbstractNode):
     def __init__(self, *args, **kwargs):
         self._type = str
         super(DummyFoo, self).__init__(*args, **kwargs)
 
 
-class DummyConfig(ConfigBaseDict):
+class DummyConfig(DictNode):
     def __init__(self, *args, **kwargs):
         self._dict_fields = {
             'foo': {
@@ -21,7 +20,7 @@ class DummyConfig(ConfigBaseDict):
         super(DummyConfig, self).__init__(*args, **kwargs)
 
 
-class DummyConfigRequired(ConfigBaseDict):
+class DummyConfigRequired(DictNode):
     def __init__(self, *args, **kwargs):
         self._dict_fields = {
             'foo': {
@@ -32,7 +31,7 @@ class DummyConfigRequired(ConfigBaseDict):
         super(DummyConfigRequired, self).__init__(*args, **kwargs)
 
 
-class DummyConfigDefault(ConfigBaseDict):
+class DummyConfigDefault(DictNode):
     def __init__(self, *args, **kwargs):
         self._dict_fields = {
             'foo': {

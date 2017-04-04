@@ -1,6 +1,6 @@
 import pytest
 
-from config_loader.validator import ConfigValidator
+from configyaml.validator import ConfigValidator
 
 
 def test_invalid_configvalidator_subclass():

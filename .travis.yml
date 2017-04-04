@@ -34,5 +34,5 @@ deploy:
     secure: PLEASE_REPLACE_ME
   on:
     tags: true
-    repo: dropseed/config_loader
+    repo: dropseed/configyaml
     condition: $TOXENV == py27

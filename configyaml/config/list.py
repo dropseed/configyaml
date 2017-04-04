@@ -1,7 +1,7 @@
-from .base import ConfigBase
+from .base import AbstractNode
 
 
-class ConfigBaseList(ConfigBase):
+class ListNode(AbstractNode):
     _list_item_class = None
 
     def __init__(self, *args, **kwargs):
@@ -14,9 +14,9 @@ class ConfigBaseList(ConfigBase):
             self._min_items_required = 0
 
         if not self._list_item_class:
-            raise AttributeError('_list_item_class must be defined in subclasses of ConfigBaseList')
+            raise AttributeError('_list_item_class must be defined in subclasses of ListNode')
 
-        super(ConfigBaseList, self).__init__(*args, **kwargs)
+        super(ListNode, self).__init__(*args, **kwargs)
 
     def _validate_value(self):
         if len(self._value) < self._min_items_required:

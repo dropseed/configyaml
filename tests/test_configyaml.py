@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
-test_config_loader
+test_configyaml
 ----------------------------------
 
-Tests for `config_loader` module.
+Tests for `configyaml` module.
 """
 
 import pytest
@@ -13,8 +13,8 @@ import pytest
 from contextlib import contextmanager
 from click.testing import CliRunner
 
-from config_loader import config_loader
-from config_loader import cli
+from configyaml import configyaml
+from configyaml import cli
 
 
 # @pytest.fixture
@@ -35,7 +35,7 @@ from config_loader import cli
 #     runner = CliRunner()
 #     result = runner.invoke(cli.main)
 #     assert result.exit_code == 0
-#     assert 'config_loader.cli.main' in result.output
+#     assert 'configyaml.cli.main' in result.output
 #     help_result = runner.invoke(cli.main, ['--help'])
 #     assert help_result.exit_code == 0
 #     assert '--help  Show this message and exit.' in help_result.output
