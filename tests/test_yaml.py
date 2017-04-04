@@ -1,14 +1,14 @@
 from __future__ import unicode_literals
 import sys
 
-from configyaml.config import ConfigBase
-from configyaml.config import ConfigBaseDict
-from configyaml.config import ConfigBaseList
+from configyaml.config import AbstractNode
+from configyaml.config import NodeDict
+from configyaml.config import NodeList
 from configyaml.loader import ConfigLoader
-from configyaml.config import ConfigBaseWildcardDict
+from configyaml.config import WildcardDict
 
 
-class DummyConfig(ConfigBaseWildcardDict):
+class DummyConfig(WildcardDict):
     def __init__(self, *args, **kwargs):
         self._dict_fields = {
             '*': {
@@ -141,13 +141,13 @@ def test_empty_yaml():
 # can you use mutiple docs? http://pyyaml.org/wiki/PyYAMLDocumentation#LoadingYAML
 
 
-class StringType(ConfigBase):
+class StringType(AbstractNode):
     def __init__(self, *args, **kwargs):
         self._type = str
         super(StringType, self).__init__(*args, **kwargs)
 
 
-class ProjectDict(ConfigBaseDict):
+class ProjectDict(NodeDict):
     def __init__(self, *args, **kwargs):
         self._dict_fields = {
             'github': {
@@ -158,14 +158,14 @@ class ProjectDict(ConfigBaseDict):
         super(ProjectDict, self).__init__(*args, **kwargs)
 
 
-class ProjectList(ConfigBaseList):
+class ProjectList(NodeList):
     def __init__(self, *args, **kwargs):
         self._list_items_class = ProjectDict
         self._min_items_required = 1
         super(ProjectList, self).__init__(*args, **kwargs)
 
 
-class BaseConfig(ConfigBaseDict):
+class BaseConfig(NodeDict):
     def __init__(self, *args, **kwargs):
         self._dict_fields = {
             'projects': {

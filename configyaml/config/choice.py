@@ -1,7 +1,7 @@
-from .base import ConfigBase
+from .base import AbstractNode
 
 
-class ConfigBaseChoice(ConfigBase):
+class NodeChoice(AbstractNode):
     _choices = None
 
     def __init__(self, *args, **kwargs):
@@ -11,7 +11,7 @@ class ConfigBaseChoice(ConfigBase):
             # class should specify self._choices = []  # list of choices that the str can be
             raise AttributeError('_choices must be defined in subclasses of ConfigBaseChoices')
 
-        super(ConfigBaseChoice, self).__init__(*args, **kwargs)
+        super(NodeChoice, self).__init__(*args, **kwargs)
 
     def _validate_value(self):
         if self._value not in self._choices:

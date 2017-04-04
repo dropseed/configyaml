@@ -1,10 +1,10 @@
 from __future__ import unicode_literals
 
 from configyaml.loader import ConfigLoader
-from configyaml.config import ConfigBaseChoice
+from configyaml.config import NodeChoice
 
 
-class DummyConfig(ConfigBaseChoice):
+class DummyConfig(NodeChoice):
     def __init__(self, *args, **kwargs):
         self._choices = ['foo', 'bar']
         super(DummyConfig, self).__init__(*args, **kwargs)

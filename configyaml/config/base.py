@@ -1,7 +1,7 @@
 from ..errors import ConfigError
 
 
-class ConfigBase(object):
+class AbstractNode(object):
     def __init__(self, value, value_node=None, context={}, *args, **kwargs):
         self._value = value
         self._value_node = value_node  # yaml node obj

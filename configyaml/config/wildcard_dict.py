@@ -1,7 +1,7 @@
-from .base_dict import ConfigBaseDict
+from .dict import NodeDict
 
 
-class ConfigBaseWildcardDict(ConfigBaseDict):
+class WildcardDict(NodeDict):
     def _validate_value(self):
         for key, value in self._value.items():
             # where key name doesn't matter (ex. groups)

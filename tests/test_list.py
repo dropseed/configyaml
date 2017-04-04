@@ -1,23 +1,23 @@
 from __future__ import unicode_literals
 import pytest
 
-from configyaml.config import ConfigBaseList
-from configyaml.config import ConfigBase
+from configyaml.config import NodeList
+from configyaml.config import AbstractNode
 
 
-class DummyFoo(ConfigBase):
+class DummyFoo(AbstractNode):
     def __init__(self, *args, **kwargs):
         self._type = str
         super(DummyFoo, self).__init__(*args, **kwargs)
 
 
-class DummyConfigList(ConfigBaseList):
+class DummyConfigList(NodeList):
     def __init__(self, *args, **kwargs):
         self._list_item_class = DummyFoo
         super(DummyConfigList, self).__init__(*args, **kwargs)
 
 
-class DummyMinConfigList(ConfigBaseList):
+class DummyMinConfigList(NodeList):
     def __init__(self, *args, **kwargs):
         self._min_items_required = 1
         self._list_item_class = DummyFoo
@@ -53,7 +53,7 @@ def test_list_attr():
     assert config[0]
 
 def test_assert_on_missing_list_item_class():
-    class InvalidConfigList(ConfigBaseList):
+    class InvalidConfigList(NodeList):
         pass
 
     value = ['a', 'b']
