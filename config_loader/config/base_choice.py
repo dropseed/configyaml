@@ -2,9 +2,15 @@ from .base import ConfigBase
 
 
 class ConfigBaseChoice(ConfigBase):
+    _choices = None
+
     def __init__(self, *args, **kwargs):
         self._type = str
-        # class should specify self._choices = []  # list of choices that the str can be
+
+        if not self._choices:
+            # class should specify self._choices = []  # list of choices that the str can be
+            raise AttributeError('_choices must be defined in subclasses of ConfigBaseChoices')
+
         super(ConfigBaseChoice, self).__init__(*args, **kwargs)
 
     def _validate_value(self):
