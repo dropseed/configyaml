@@ -4,7 +4,7 @@ from configyaml.loader import ConfigLoader
 from configyaml.validator import ConfigValidator
 
 from configyaml.config import AbstractNode
-from configyaml.config import NodeList
-from configyaml.config import NodeDict
-from configyaml.config import WildcardDict
-from configyaml.config import NodeChoice
+from configyaml.config import ListNode
+from configyaml.config import DictNode
+from configyaml.config import WildcardDictNode
+from configyaml.config import ChoiceNode

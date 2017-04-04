@@ -23,12 +23,12 @@ Then design your config using additional classes. You need at least 1 to serve a
 
 .. code-block:: python
 
-    from configyaml.config import NodeDict
+    from configyaml.config import DictNode
     from .dependencies import Dependencies
     from .notifications import Notifications
 
 
-    class Root(NodeDict):
+    class Root(DictNode):
         """Root of the yaml file"""
 
         def __init__(self, *args, **kwargs):

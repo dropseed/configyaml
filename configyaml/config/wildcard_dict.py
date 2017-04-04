@@ -1,7 +1,7 @@
-from .dict import NodeDict
+from .dict import DictNode
 
 
-class WildcardDict(NodeDict):
+class WildcardDictNode(DictNode):
     def _validate_value(self):
         for key, value in self._value.items():
             # where key name doesn't matter (ex. groups)

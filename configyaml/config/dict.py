@@ -1,11 +1,11 @@
 from .base import AbstractNode
 
 
-class NodeDict(AbstractNode):
+class DictNode(AbstractNode):
     def __init__(self, *args, **kwargs):
         self._type = dict
         self._children = {}
-        super(NodeDict, self).__init__(*args, **kwargs)
+        super(DictNode, self).__init__(*args, **kwargs)
 
     def _validate_value(self):
         self._validate_required_keys()

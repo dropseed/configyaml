@@ -2,13 +2,13 @@ from __future__ import unicode_literals
 import sys
 
 from configyaml.config import AbstractNode
-from configyaml.config import NodeDict
-from configyaml.config import NodeList
+from configyaml.config import DictNode
+from configyaml.config import ListNode
 from configyaml.loader import ConfigLoader
-from configyaml.config import WildcardDict
+from configyaml.config import WildcardDictNode
 
 
-class DummyConfig(WildcardDict):
+class DummyConfig(WildcardDictNode):
     def __init__(self, *args, **kwargs):
         self._dict_fields = {
             '*': {
@@ -147,7 +147,7 @@ class StringType(AbstractNode):
         super(StringType, self).__init__(*args, **kwargs)
 
 
-class ProjectDict(NodeDict):
+class ProjectDictNode(DictNode):
     def __init__(self, *args, **kwargs):
         self._dict_fields = {
             'github': {
@@ -155,25 +155,25 @@ class ProjectDict(NodeDict):
                 'required': True,
             },
         }
-        super(ProjectDict, self).__init__(*args, **kwargs)
+        super(ProjectDictNode, self).__init__(*args, **kwargs)
 
 
-class ProjectList(NodeList):
+class ProjectListNode(ListNode):
     def __init__(self, *args, **kwargs):
-        self._list_items_class = ProjectDict
+        self._list_items_class = ProjectDictNode
         self._min_items_required = 1
-        super(ProjectList, self).__init__(*args, **kwargs)
+        super(ProjectListNode, self).__init__(*args, **kwargs)
 
 
-class BaseConfig(NodeDict):
+class BaseConfig(DictNode):
     def __init__(self, *args, **kwargs):
         self._dict_fields = {
             'projects': {
-                'class': ProjectList,
+                'class': ProjectListNode,
                 'required': True,
             },
             'notifications': {
-                'class': ProjectList,
+                'class': ProjectListNode,
                 'required': True,
             },
         }

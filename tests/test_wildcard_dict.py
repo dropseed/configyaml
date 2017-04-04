@@ -1,17 +1,17 @@
 from __future__ import unicode_literals
 
-from configyaml.config import WildcardDict
+from configyaml.config import WildcardDictNode
 
 
 def test_invalid_key():
     value = {'_bad': 'key'}
-    c = WildcardDict(value=value)
+    c = WildcardDictNode(value=value)
     assert not c.is_valid()
     assert c._errors[0].title == 'Invalid field name'
     assert c._errors[0].description == 'Cannot start field name with a "_"'
 
     value = {'*': 'key'}
-    c = WildcardDict(value=value)
+    c = WildcardDictNode(value=value)
     assert not c.is_valid()
     assert c._errors[0].title == 'Invalid field name'
     assert c._errors[0].description == 'Field name cannot be "*"'
