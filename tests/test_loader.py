@@ -2,10 +2,10 @@ from __future__ import unicode_literals
 
 import pytest
 
-from config_loader.config import ConfigBaseList
-from config_loader.loader import ConfigLoader
-from config_loader.config import ConfigBaseDict
-from config_loader.config import ConfigBase
+from configyaml.config import ConfigBaseList
+from configyaml.loader import ConfigLoader
+from configyaml.config import ConfigBaseDict
+from configyaml.config import ConfigBase
 
 
 class DummyFoo(ConfigBase):

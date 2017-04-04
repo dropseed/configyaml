@@ -2,6 +2,6 @@
 Usage
 =====
 
-To use config_loader in a project::
+To use configyaml in a project::
 
-    import config_loader
+    import configyaml

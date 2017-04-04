@@ -3,13 +3,13 @@ from .loader import ConfigLoader
 
 class ConfigValidator(object):
     """A stripped down class for performing validation only (uses dummy context)"""
-    config_loader_class = ConfigLoader
+    configyaml_class = ConfigLoader
     context = None
 
     def __init__(self, config_text):
         if not self.context:
             raise AttributeError('self.context must be defined in subclasses of ConfigValidator')
-        self.loader = self.config_loader_class(config_text=config_text, context=self.context)
+        self.loader = self.configyaml_class(config_text=config_text, context=self.context)
         self.errors = self.loader.errors
 
     def is_valid(self):

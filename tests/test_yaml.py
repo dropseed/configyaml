@@ -1,11 +1,11 @@
 from __future__ import unicode_literals
 import sys
 
-from config_loader.config import ConfigBase
-from config_loader.config import ConfigBaseDict
-from config_loader.config import ConfigBaseList
-from config_loader.loader import ConfigLoader
-from config_loader.config import ConfigBaseWildcardDict
+from configyaml.config import ConfigBase
+from configyaml.config import ConfigBaseDict
+from configyaml.config import ConfigBaseList
+from configyaml.loader import ConfigLoader
+from configyaml.config import ConfigBaseWildcardDict
 
 
 class DummyConfig(ConfigBaseWildcardDict):

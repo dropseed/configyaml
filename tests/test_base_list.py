@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 import pytest
 
-from config_loader.config import ConfigBaseList
-from config_loader.config import ConfigBase
+from configyaml.config import ConfigBaseList
+from configyaml.config import ConfigBase
 
 
 class DummyFoo(ConfigBase):

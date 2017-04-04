@@ -1,7 +1,7 @@
-config_loader
+configyaml
 =============
 
 .. toctree::
    :maxdepth: 4
 
-   config_loader
+   configyaml

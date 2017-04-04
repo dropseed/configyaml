@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from config_loader.config import ConfigBaseWildcardDict
+from configyaml.config import ConfigBaseWildcardDict
 
 
 def test_invalid_key():

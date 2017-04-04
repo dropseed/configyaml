@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
-from config_loader.loader import ConfigLoader
-from config_loader.config import ConfigBaseChoice
+from configyaml.loader import ConfigLoader
+from configyaml.config import ConfigBaseChoice
 
 
 class DummyConfig(ConfigBaseChoice):

@@ -1,4 +1,4 @@
-Welcome to config_loader's documentation!
+Welcome to configyaml's documentation!
 ======================================
 
 Contents:

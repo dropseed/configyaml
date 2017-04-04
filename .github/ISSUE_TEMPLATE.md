@@ -1,4 +1,4 @@
-* config_loader version:
+* configyaml version:
 * Python version:
 * Operating System:
 

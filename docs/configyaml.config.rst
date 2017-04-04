@@ -1,45 +1,45 @@
-config_loader.config package
+configyaml.config package
 ============================
 
 Submodules
 ----------
 
-config_loader.config.base module
+configyaml.config.base module
 --------------------------------
 
-.. automodule:: config_loader.config.base
+.. automodule:: configyaml.config.base
     :members:
     :undoc-members:
     :show-inheritance:
 
-config_loader.config.base_choice module
+configyaml.config.base_choice module
 ---------------------------------------
 
-.. automodule:: config_loader.config.base_choice
+.. automodule:: configyaml.config.base_choice
     :members:
     :undoc-members:
     :show-inheritance:
 
-config_loader.config.base_dict module
+configyaml.config.base_dict module
 -------------------------------------
 
-.. automodule:: config_loader.config.base_dict
+.. automodule:: configyaml.config.base_dict
     :members:
     :undoc-members:
     :show-inheritance:
 
-config_loader.config.base_list module
+configyaml.config.base_list module
 -------------------------------------
 
-.. automodule:: config_loader.config.base_list
+.. automodule:: configyaml.config.base_list
     :members:
     :undoc-members:
     :show-inheritance:
 
-config_loader.config.base_wildcard_dict module
+configyaml.config.base_wildcard_dict module
 ----------------------------------------------
 
-.. automodule:: config_loader.config.base_wildcard_dict
+.. automodule:: configyaml.config.base_wildcard_dict
     :members:
     :undoc-members:
     :show-inheritance:
@@ -48,7 +48,7 @@ config_loader.config.base_wildcard_dict module
 Module contents
 ---------------
 
-.. automodule:: config_loader.config
+.. automodule:: configyaml.config
     :members:
     :undoc-members:
     :show-inheritance:
