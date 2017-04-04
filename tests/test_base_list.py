@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+import pytest
 
 from config_loader.config import ConfigBaseList
 from config_loader.config import ConfigBase
@@ -50,3 +51,11 @@ def test_list_attr():
     value = ['a', 'b']
     config = DummyConfigList(value=value)
     assert config[0]
+
+def test_assert_on_missing_list_item_class():
+    class InvalidConfigList(ConfigBaseList):
+        pass
+
+    value = ['a', 'b']
+    with pytest.raises(AttributeError):
+        config = InvalidConfigList(value=value)

@@ -2,6 +2,8 @@ from .base import ConfigBase
 
 
 class ConfigBaseList(ConfigBase):
+    _list_item_class = None
+
     def __init__(self, *args, **kwargs):
         self._type = list
         self._children = []  # so we can append, etc
@@ -10,6 +12,9 @@ class ConfigBaseList(ConfigBase):
             # by default, don't have to have anything
             # set to 1 in custom __init__ to require at least 1 item
             self._min_items_required = 0
+
+        if not self._list_item_class:
+            raise AttributeError('_list_item_class must be defined in subclasses of ConfigBaseList')
 
         super(ConfigBaseList, self).__init__(*args, **kwargs)
 
