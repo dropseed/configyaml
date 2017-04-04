@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-from configyaml.loader import ConfigLoader
 from configyaml.config import DictNode
 from configyaml.config import AbstractNode
 
