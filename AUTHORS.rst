@@ -6,8 +6,9 @@ Development Lead
 ----------------
 
 * Dropseed <python@dropseed.io>
+* David Gaeddert
 
 Contributors
 ------------
 
-None yet. Why not be the first?
+* Paul Ortman
