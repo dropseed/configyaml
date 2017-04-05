@@ -5,7 +5,9 @@ History
 0.2.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+* Cleanup package release tooling and documentation
+* Fix a bit of broken documentation
+* Start some basic Sphinx documentation for classes
 
 
 0.1.0 (2017-03-30)
