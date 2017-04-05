@@ -1,5 +1,5 @@
 configyaml package
-=====================
+==================
 
 Subpackages
 -----------
@@ -12,7 +12,7 @@ Submodules
 ----------
 
 configyaml.cli module
-------------------------
+---------------------
 
 .. automodule:: configyaml.cli
     :members:
@@ -20,7 +20,7 @@ configyaml.cli module
     :show-inheritance:
 
 configyaml.configyaml module
-----------------------------------
+----------------------------
 
 .. automodule:: configyaml.configyaml
     :members:
@@ -28,7 +28,7 @@ configyaml.configyaml module
     :show-inheritance:
 
 configyaml.errors module
----------------------------
+------------------------
 
 .. automodule:: configyaml.errors
     :members:
@@ -36,7 +36,7 @@ configyaml.errors module
     :show-inheritance:
 
 configyaml.loader module
----------------------------
+------------------------
 
 .. automodule:: configyaml.loader
     :members:
@@ -44,7 +44,7 @@ configyaml.loader module
     :show-inheritance:
 
 configyaml.validator module
-------------------------------
+---------------------------
 
 .. automodule:: configyaml.validator
     :members:

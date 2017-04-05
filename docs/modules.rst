@@ -1,5 +1,5 @@
 configyaml
-=============
+==========
 
 .. toctree::
    :maxdepth: 4
