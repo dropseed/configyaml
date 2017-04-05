@@ -12,34 +12,34 @@ configyaml.config.base module
     :undoc-members:
     :show-inheritance:
 
-configyaml.config.base_choice module
+configyaml.config.choice module
 ---------------------------------------
 
-.. automodule:: configyaml.config.base_choice
+.. automodule:: configyaml.config.choice
     :members:
     :undoc-members:
     :show-inheritance:
 
-configyaml.config.base_dict module
+configyaml.config.dict module
 -------------------------------------
 
-.. automodule:: configyaml.config.base_dict
+.. automodule:: configyaml.config.dict
     :members:
     :undoc-members:
     :show-inheritance:
 
-configyaml.config.base_list module
+configyaml.config.list module
 -------------------------------------
 
-.. automodule:: configyaml.config.base_list
+.. automodule:: configyaml.config.list
     :members:
     :undoc-members:
     :show-inheritance:
 
-configyaml.config.base_wildcard_dict module
+configyaml.config.nodes
 ----------------------------------------------
 
-.. automodule:: configyaml.config.base_wildcard_dict
+.. automodule:: configyaml.config.nodes
     :members:
     :undoc-members:
     :show-inheritance:
