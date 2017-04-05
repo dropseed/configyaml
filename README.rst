@@ -1,7 +1,7 @@
 configyaml
-=============
-.. image:: https://travis-ci.org/dropseedlabs/config-loader.svg?branch=master
-   :target: https://travis-ci.org/dropseedlabs/config-loader
+==========
+.. image:: https://travis-ci.org/dropseedlabs/configyaml.svg?branch=master
+   :target: https://travis-ci.org/dropseedlabs/configyaml
 
 Usage
 -----
