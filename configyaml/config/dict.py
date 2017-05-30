@@ -41,8 +41,8 @@ class DictNode(AbstractNode):
 
     def _set_default_fields(self):
         for k, v in self._dict_fields.items():
-            default = v.get('default', None)
-            if default is not None:
+            if 'default' in v:
+                default = v['default']
                 instance = v['class'](value=default)
                 self.__dict__[k] = instance
                 self._children[k] = instance
