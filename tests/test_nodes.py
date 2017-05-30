@@ -1,4 +1,4 @@
-from configyaml.config import PositiveIntegerNode, StringNode, WildcardDictNode
+from configyaml.config import PositiveIntegerNode, StringNode, WildcardDictNode, BoolNode
 from configyaml.loader import ConfigLoader
 
 
@@ -47,3 +47,24 @@ def test_str_valid():
     value = 'a simple string'
     loader = StringLoader(value)
     assert loader.is_valid()
+
+
+# BoolNode tests
+def test_bool_valid():
+    value = True
+    node = BoolNode(value=value)
+    assert node.is_valid()
+
+    value = False
+    node = BoolNode(value=value)
+    assert node.is_valid()
+
+
+def test_bool_invalid():
+    value = 'True'
+    node = BoolNode(value=value)
+    assert not node.is_valid()
+
+    value = 1
+    node = BoolNode(value=value)
+    assert not node.is_valid()

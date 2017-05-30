@@ -49,6 +49,13 @@ class WildcardDictNode(DictNode):
         return True, 'Valid'
 
 
+class BoolNode(AbstractNode):
+    """A node that must validate as a bool"""
+    def __init__(self, *args, **kwargs):
+        self._type = bool
+        super(BoolNode, self).__init__(*args, **kwargs)
+
+
 class StringNode(AbstractNode):
     """A node that must validate as a string"""
     def __init__(self, *args, **kwargs):
