@@ -6,13 +6,14 @@ from configyaml.config import DictNode
 from configyaml.config import ListNode
 from configyaml.loader import ConfigLoader
 from configyaml.config import WildcardDictNode
+from configyaml.config import TypelessNode
 
 
 class DummyConfig(WildcardDictNode):
     def __init__(self, *args, **kwargs):
         self._dict_fields = {
             '*': {
-                'class': self.__class__,
+                'class': TypelessNode,
             },
         }
         super(DummyConfig, self).__init__(*args, **kwargs)
@@ -39,6 +40,8 @@ list_var:
     # other things you can do in yaml? http://pyyaml.org/wiki/PyYAMLDocumentation#Tokens
 
     config = DummyLoader(text)
+
+    assert config.is_valid()
 
     assert config['string_var'] == 'stringy'
     assert config['int_var'] == 8
