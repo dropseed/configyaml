@@ -36,7 +36,7 @@ class ConfigLoader(object):
 
         # simple way to check that yaml itself is valid
         try:
-            self.config_dict = yaml.load(self.config_text)
+            self.config_dict = yaml.safe_load(self.config_text)
         except yaml.YAMLError as e:
             error = ConfigError.create_from_yaml_error(e)
             self._errors.append(error)

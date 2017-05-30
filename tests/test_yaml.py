@@ -52,6 +52,20 @@ list_var:
     assert config['list_var'] == ['a', False]
 
 
+def test_invalid_python_type():
+    text = """
+  string_var: stringy
+  int_var: 8
+  float_var: 4.5
+  python_str_var: !!python/str "test"
+    """
+
+    config = DummyLoader(text)
+
+    assert not config.is_valid()
+    assert config.errors[0].description == "could not determine a constructor for the tag 'tag:yaml.org,2002:python/str'"
+
+
 def test_invalid_line():
     text = """line_a: True
 line_b: !2
