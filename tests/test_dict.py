@@ -42,6 +42,18 @@ class DummyConfigDefault(DictNode):
         super(DummyConfigDefault, self).__init__(*args, **kwargs)
 
 
+class DummyConfigDefaultNone(DictNode):
+    def __init__(self, *args, **kwargs):
+        self._dict_fields = {
+            'foo': {
+                'class': DummyFoo,
+                'required': False,
+                'default': None,
+            }
+        }
+        super(DummyConfigDefaultNone, self).__init__(*args, **kwargs)
+
+
 def test_normal():
     value = {}
     config = DummyConfig(value=value)
@@ -92,3 +104,15 @@ def test_get_item():
     config = DummyConfig(value=value)
     assert config.is_valid()
     assert config['foo']._value == 'bar'
+
+
+def test_default_none():
+    value = {}
+    config = DummyConfigDefaultNone(value=value)
+    assert config.is_valid()
+    assert config.foo._value == None
+
+    value = {'foo': 'bar'}
+    config = DummyConfigDefaultNone(value=value)
+    assert config.is_valid()
+    assert config.foo._value == 'bar'
