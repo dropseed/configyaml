@@ -8,4 +8,5 @@ from .nodes import (
     BoolNode,
     StringNode,
     WildcardDictNode,
+    TypelessNode,
 )

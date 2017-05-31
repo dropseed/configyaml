@@ -6,13 +6,14 @@ from configyaml.config import DictNode
 from configyaml.config import ListNode
 from configyaml.loader import ConfigLoader
 from configyaml.config import WildcardDictNode
+from configyaml.config import TypelessNode
 
 
 class DummyConfig(WildcardDictNode):
     def __init__(self, *args, **kwargs):
         self._dict_fields = {
             '*': {
-                'class': self.__class__,
+                'class': TypelessNode,
             },
         }
         super(DummyConfig, self).__init__(*args, **kwargs)
@@ -40,6 +41,8 @@ list_var:
 
     config = DummyLoader(text)
 
+    assert config.is_valid()
+
     assert config['string_var'] == 'stringy'
     assert config['int_var'] == 8
     assert config['float_var'] == 4.5
@@ -47,6 +50,20 @@ list_var:
     assert config['bool_var2'] == True
     assert config['dict_var'] == {'subdict_var': True}
     assert config['list_var'] == ['a', False]
+
+
+def test_invalid_python_type():
+    text = """
+  string_var: stringy
+  int_var: 8
+  float_var: 4.5
+  python_str_var: !!python/str "test"
+    """
+
+    config = DummyLoader(text)
+
+    assert not config.is_valid()
+    assert config.errors[0].description == "could not determine a constructor for the tag 'tag:yaml.org,2002:python/str'"
 
 
 def test_invalid_line():
