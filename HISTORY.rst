@@ -5,7 +5,10 @@ History
 0.3.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+* Add TypelessNode
+* Add BoolNode
+* Use yaml.safe_load
+* Allow DictNode field to have a default value of None
 
 
 0.2.0 (2017-04-05)
