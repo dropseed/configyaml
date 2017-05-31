@@ -2,7 +2,7 @@
 History
 =======
 
-0.3.0 (unreleased)
+0.3.0 (2017-05-31)
 ------------------
 
 * Add TypelessNode
