@@ -5,6 +5,7 @@ from .choice import ChoiceNode
 from .nodes import (
     IntegerNode,
     PositiveIntegerNode,
+    BoolNode,
     StringNode,
     WildcardDictNode,
 )
