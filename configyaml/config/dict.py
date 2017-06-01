@@ -16,7 +16,7 @@ class DictNode(AbstractNode):
             if key in self._dict_fields:
                 # get class for key
                 field_class = self._dict_fields[key]['class']
-                field = field_class(value=self._value[key], value_node=self._find_node_for_key_value(key), context=self._context, parent=self)
+                field = field_class(value=self._value[key], value_node=self._find_node_for_key_value(key), context=self._context, key=key, parent=self)
 
                 # set self.FIELD_NAME so we can get children directly
                 # these will only be keys we specify, so should be safe names

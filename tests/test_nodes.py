@@ -39,14 +39,16 @@ def test_pos_int_zero_validation():
     assert loader.is_valid()
 
 
-class StringLoader(ConfigLoader):
-    config_root_class = StringNode
-
-
 def test_str_valid():
     value = 'a simple string'
-    loader = StringLoader(value)
+    loader = StringNode(value)
     assert loader.is_valid()
+
+
+def test_str_invalid():
+    value = 99
+    loader = StringNode(value)
+    assert not loader.is_valid()
 
 
 # BoolNode tests
