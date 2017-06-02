@@ -9,4 +9,5 @@ from .nodes import (
     StringNode,
     WildcardDictNode,
     TypelessNode,
+    RegexNode,
 )

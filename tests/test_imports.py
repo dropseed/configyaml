@@ -12,3 +12,4 @@ from configyaml.config import PositiveIntegerNode
 from configyaml.config import BoolNode
 from configyaml.config import StringNode
 from configyaml.config import WildcardDictNode
+from configyaml.config import RegexNode

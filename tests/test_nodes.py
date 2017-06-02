@@ -1,4 +1,4 @@
-from configyaml.config import PositiveIntegerNode, StringNode, WildcardDictNode, BoolNode
+from configyaml.config import PositiveIntegerNode, StringNode, WildcardDictNode, BoolNode, RegexNode
 from configyaml.loader import ConfigLoader
 
 
@@ -70,3 +70,20 @@ def test_bool_invalid():
     value = 1
     node = BoolNode(value=value)
     assert not node.is_valid()
+
+
+# RegexNode tests
+def test_regex_valid():
+    value = '.*'
+    node = RegexNode(value=value)
+    assert node.is_valid()
+    assert node.regex != None
+
+
+def test_regex_invalid():
+    value = '['
+    node = RegexNode(value=value)
+    assert not node.is_valid()
+    assert node._errors[0].title == 'Invalid regex'
+    assert node._errors[0].description in ('unexpected end of regular expression', 'unterminated character set at position 0')
+    assert node.regex == None
