@@ -37,7 +37,7 @@ class AbstractNode(object):
             self._validate()
 
     def is_valid(self):  # type: () -> bool
-        """Tests whether this node and its descendants are valid
+        """Tests whether this node is valid (but not descendants)
 
         :rtype: bool
         """

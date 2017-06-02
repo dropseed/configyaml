@@ -76,6 +76,18 @@ def test_invalid_key():
     assert not hasattr(config, 'bar')
 
 
+def test_invalid_value_key_name():
+    """
+    An error in a dict field should know the name it was used as,
+    and not use the name.lower() of its class (dummyfoo)
+    """
+    value = {'foo': 2}
+    config = DummyConfig(value=value)
+    assert config.is_valid()  # the dict itself is valid
+    assert not config.foo.is_valid()
+    assert config.foo._errors[0].description == 'foo must be a str'
+
+
 def test_required():
     value = {}
     config = DummyConfigRequired(value=value)
