@@ -1,7 +1,18 @@
 configyaml
 ==========
+
 .. image:: https://travis-ci.org/dropseedlabs/configyaml.svg?branch=master
-   :target: https://travis-ci.org/dropseedlabs/configyaml
+    :target: https://travis-ci.org/dropseedlabs/configyaml
+
+.. image:: https://img.shields.io/pypi/v/configyaml.svg
+    :target: https://pypi.python.org/pypi/configyaml
+
+.. image:: https://img.shields.io/pypi/l/configyaml.svg
+    :target: https://pypi.python.org/pypi/configyaml
+
+.. image:: https://img.shields.io/pypi/pyversions/configyaml.svg
+    :target: https://pypi.python.org/pypi/configyaml
+    
 
 Usage
 -----
