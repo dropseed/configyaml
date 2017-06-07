@@ -5,7 +5,8 @@ History
 0.4.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+* Add RegexNode
+* DictNode fields know what their dict key was
 
 
 0.3.0 (2017-05-31)
