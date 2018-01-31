@@ -105,12 +105,14 @@ def test_default():
     assert config.is_valid()
     assert config.foo._value == 'test'
     assert config.foo._parent == config
+    assert config.foo._key == 'foo'
 
     value = {'foo': 'bar'}
     config = DummyConfigDefault(value=value)
     assert config.is_valid()
     assert config.foo._value == 'bar'
     assert config.foo._parent == config
+    assert config.foo._key == 'foo'
 
 
 def test_get_item():
