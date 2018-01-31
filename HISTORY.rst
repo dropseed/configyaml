@@ -2,10 +2,11 @@
 History
 =======
 
-0.5.0 (unreleased)
+0.4.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+* Give DictNode default instance access to parent and context 
+* Update README badges
 
 
 0.4.0 (2017-06-07)
