@@ -43,7 +43,7 @@ class DictNode(AbstractNode):
         for k, v in self._dict_fields.items():
             if 'default' in v:
                 default = v['default']
-                instance = v['class'](value=default)
+                instance = v['class'](value=default, context=self._context, parent=self)
                 self.__dict__[k] = instance
                 self._children[k] = instance
 
