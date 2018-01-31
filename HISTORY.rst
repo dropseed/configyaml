@@ -2,7 +2,7 @@
 History
 =======
 
-0.4.1 (unreleased)
+0.4.1 (2018-01-31)
 ------------------
 
 * Give DictNode default instance access to parent and context 
