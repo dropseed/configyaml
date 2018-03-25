@@ -17,8 +17,14 @@ class WildcardDictNode(DictNode):
             key_valid, explanation = self._key_name_is_valid(key)
             if key_valid:
                 field_class = self._dict_fields['*']['class']
-                field = field_class(value=value, value_node=self._find_node_for_key_value(key),
-                                    context=self._context, key=key, parent=self)
+                field = field_class(
+                    value=value,
+                    value_node=self._find_node_for_key_value(key),
+                    context=self._context,
+                    variables=self._variables,
+                    key=key,
+                    parent=self
+                )
 
                 # don't set __dict__ if they can use any key
                 self._children[key] = field

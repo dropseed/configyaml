@@ -27,7 +27,14 @@ class ListNode(AbstractNode):
 
         for index, item in enumerate(self._value):
             field_class = self._list_item_class
-            field = field_class(value=item, value_node=self._find_node_for_list_index(index), context=self._context, parent=self, key=index)
+            field = field_class(
+                value=item,
+                value_node=self._find_node_for_list_index(index),
+                context=self._context,
+                variables=self._variables,
+                parent=self,
+                key=index
+            )
 
             self._children.append(field)
 

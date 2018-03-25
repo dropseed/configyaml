@@ -9,23 +9,29 @@ class AbstractNode(object):
     to be used directly, but rather to be subclassed.
 
     """
-    def __init__(self, value, value_node=None, context={}, *args, **kwargs):
+    def __init__(self, value, value_node=None, context={}, variables={}, key=None, parent=None):
         """Initialize a node
 
         :param value:
         :param value_node:
         :param context:
-        :param args:
-        :param kwargs:
+        :param variables:
+        :param key:
+        :param parent:
         """
-        self._value = value
+        self._original_value = value
         self._value_node = value_node  # yaml node obj
         self._context = context
+        self._variables = variables
+        self._key = key
+        self._parent = parent
+        self._errors = []
 
-        # optionally pass in the name that this setting was under
-        # especially for wildcards like group name
-        self._key = kwargs.get('key', None)
-        self._parent = kwargs.get('parent', None)
+        self._value = self._render_value(self._original_value)
+
+        if self._errors:
+            # if we already have errors, then just quit
+            return
 
         self._validate()
 
@@ -42,6 +48,28 @@ class AbstractNode(object):
         :rtype: bool
         """
         return not self._errors
+
+    def _render_value(self, value):
+        if self._variables and isinstance(value, str) and value.startswith('$'):
+            if not isinstance(self._variables, dict):
+                raise TypeError('variables must be a dict')
+
+            variable_name = value[1:]
+
+            if variable_name in self._variables:
+                return self._variables[variable_name]
+            else:
+                self._add_error(
+                    title='Variable not found',
+                    description='\'{}\' was not found in {}'.format(variable_name, list(self._variables.keys()))
+                )
+
+        elif isinstance(value, str) and value.startswith('\$'):
+            # strip the leading \, which told us not to treat it as a variable
+            # but presumably they want the string without that character
+            return value[1:]
+
+        return value
 
     def _key_name(self):  # type: () -> str
         """Return the key referring to this object

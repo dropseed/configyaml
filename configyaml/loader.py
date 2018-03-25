@@ -7,14 +7,15 @@ from .errors import ConfigError
 class ConfigLoader(object):
     config_root_class = None
 
-    def __init__(self, config_text, context={}, *args, **kwargs):
+    def __init__(self, config_text, context={}, variables={}):
         if not self.config_root_class:
             raise AttributeError('config_root_class must defined in subclasses of ConfigLoader')
 
         self.config_text = config_text
         self.config_dict = None
         self.config_root = None
-        self.variable_context = context
+        self.context = context
+        self.variables = variables
 
         self._errors = []
         self.load()
@@ -46,7 +47,12 @@ class ConfigLoader(object):
             # we have valid yaml with data, so start checking the components
             node_tree = yaml.compose(self.config_text)
             # give it the parsed settings, and the node info
-            self.config_root = self.config_root_class(value=self.config_dict, value_node=node_tree, context=self.variable_context)
+            self.config_root = self.config_root_class(
+                value=self.config_dict,
+                value_node=node_tree,
+                context=self.context,
+                variables=self.variables,
+            )
 
     @property
     def errors(self):
