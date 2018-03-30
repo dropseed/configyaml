@@ -98,8 +98,7 @@ class PositiveIntegerNode(IntegerNode):
     """A node that must validate as a positive integer"""
     def _validate_value(self):
         if self._value < 0:
-            description = "{value} must be a positive integer".format(value=self._value)
-            self._add_error(title="Invalid Value", description=description)
+            self._add_error(title="Invalid Value", description="Must be a positive integer")
 
 
 class TypelessNode(AbstractNode):

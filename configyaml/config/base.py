@@ -113,6 +113,8 @@ class AbstractNode(object):
     def _add_error(self, *args, **kwargs):  # type: () -> None
         """Convenience function to add an error to this object, with line numbers
 
+        An error title or description should not accidentally leak self._value, for privacy/redaction purposes.
+
         :rtype: None
         """
         if kwargs.get('node', None):
