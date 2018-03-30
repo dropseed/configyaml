@@ -2,16 +2,16 @@
 History
 =======
 
-0.4.2 (unreleased)
+0.5.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+* Add support for "variables"
 
 
 0.4.1 (2018-01-31)
 ------------------
 
-* Give DictNode default instance access to parent and context 
+* Give DictNode default instance access to parent and context
 * Update README badges
 
 
