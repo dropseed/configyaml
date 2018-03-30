@@ -21,7 +21,7 @@ test_requirements = [
 
 setup(
     name='configyaml',
-    version='0.4.2.dev0',
+    version='0.5.0',
     description="A config loading and parsing package",
     long_description=readme + '\n\n' + history,
     author="Dropseed",

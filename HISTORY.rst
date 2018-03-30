@@ -2,7 +2,7 @@
 History
 =======
 
-0.5.0 (unreleased)
+0.5.0 (2018-03-30)
 ------------------
 
 * Add support for "variables"
