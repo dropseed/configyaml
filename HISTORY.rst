@@ -5,7 +5,7 @@ History
 0.5.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+* Fix ListNode passing wrong yaml node for child
 
 
 0.5.0 (2018-03-30)

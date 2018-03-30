@@ -1,3 +1,5 @@
+import yaml
+
 from .base import AbstractNode
 
 
@@ -42,7 +44,7 @@ class ListNode(AbstractNode):
         if not self._value_node:
             return None
 
-        if not isinstance(self._value_node, self._type):
+        if not isinstance(self._value_node, yaml.nodes.SequenceNode):
             # the original node was not a list
             # - could have been a variable string
             #
