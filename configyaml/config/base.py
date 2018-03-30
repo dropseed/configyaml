@@ -27,6 +27,8 @@ class AbstractNode(object):
         self._parent = parent
         self._errors = []
 
+        self._is_variable = isinstance(self._original_value, str) and self._original_value.startswith('$')
+
         self._value = self._render_value(self._original_value)
 
         if self._errors:
@@ -50,7 +52,7 @@ class AbstractNode(object):
         return not self._errors
 
     def _render_value(self, value):
-        if self._variables and isinstance(value, str) and value.startswith('$'):
+        if self._is_variable:
             if not isinstance(self._variables, dict):
                 raise TypeError('variables must be a dict')
 
@@ -61,7 +63,8 @@ class AbstractNode(object):
             else:
                 self._add_error(
                     title='Variable not found',
-                    description='\'{}\' was not found in {}'.format(variable_name, list(self._variables.keys()))
+                    # it is safe to give the keys of the variables, but not values
+                    description='\'{}\' was not found in {}'.format(variable_name, sorted(list(self._variables.keys())))
                 )
 
         elif isinstance(value, str) and value.startswith('\$'):
@@ -181,13 +184,33 @@ class AbstractNode(object):
         """An optional dictionary of context to be injected into children"""
         return {}
 
-    def _as_dict_to_inject(self):  # type: () -> dict
+    def _as_dict_to_inject(self, redact=False):  # type: () -> dict
         """Additional fields to inject into as_dict"""
         return {}
 
-    def _as_dict(self):  # type: () -> dict
-        d = {'value': self._value}
+    def _as_dict(self, redact=False):  # type: () -> dict
+        if redact and self._should_redact():
+            return self._as_redacted_dict()
+
+        d = {}
+        d['value'] = self._value
         if self._errors:
             d['errors'] = [x.as_dict() for x in self._errors]
-        d.update(self._as_dict_to_inject())
+        d.update(self._as_dict_to_inject(redact=redact))
+        return d
+
+    def _should_redact(self):
+        return self._is_variable and self._value != self._original_value
+
+    def _as_redacted_dict(self):
+        d = {}
+
+        d['value'] = '[REDACTED]'
+        d['redacted'] = True
+
+        if self._errors:
+            d['errors'] = [x.as_dict() for x in self._errors]
+
+        d.update(self._as_dict_to_inject(redact=True))
+
         return d

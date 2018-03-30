@@ -91,14 +91,17 @@ class DictNode(AbstractNode):
     def __len__(self):
         return len(self._children)
 
-    def _as_dict(self):
+    def _as_dict(self, redact=False):
+        if redact and self._should_redact():
+            return self._as_redacted_dict()
+
         d = {}
         for k in self._dict_fields.keys():
-            d[k] = self[k]._as_dict()
+            d[k] = self[k]._as_dict(redact=redact)
 
         if self._errors:
             d['errors'] = [x.as_dict() for x in self._errors]
 
-        d.update(self._as_dict_to_inject())
+        d.update(self._as_dict_to_inject(redact=redact))
 
         return d

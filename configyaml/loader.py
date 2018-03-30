@@ -68,10 +68,10 @@ class ConfigLoader(object):
         # just pass off as dict right now
         return self.config_dict[key]
 
-    def as_dict(self):
+    def as_dict(self, redact=False):
         d = {
             'config_text': self.config_text,
-            'config': self.config_root._as_dict() if self.config_root else None,
+            'config': self.config_root._as_dict(redact=redact) if self.config_root else None,
         }
         if self.errors:
             d['errors'] = [x.as_dict() for x in self.errors]
