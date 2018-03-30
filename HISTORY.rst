@@ -2,7 +2,7 @@
 History
 =======
 
-0.5.1 (unreleased)
+0.5.1 (2018-03-30)
 ------------------
 
 * Fix ListNode passing wrong yaml node for child
