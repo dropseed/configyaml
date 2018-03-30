@@ -66,6 +66,7 @@ def test_dict_error_propogation():
     assert len(loader.config_root.foo._get_descendants_errors()) == 0
     assert len(loader.config_root.foo._get_all_errors()) == 1
 
+
 def test_valid_as_dict():
     value = "{ 'foo': 'bar'}"
     loader = DummyLoader(value)

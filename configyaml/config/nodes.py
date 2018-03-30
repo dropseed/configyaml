@@ -17,8 +17,14 @@ class WildcardDictNode(DictNode):
             key_valid, explanation = self._key_name_is_valid(key)
             if key_valid:
                 field_class = self._dict_fields['*']['class']
-                field = field_class(value=value, value_node=self._find_node_for_key_value(key),
-                                    context=self._context, key=key, parent=self)
+                field = field_class(
+                    value=value,
+                    value_node=self._find_node_for_key_value(key),
+                    context=self._context,
+                    variables=self._variables,
+                    key=key,
+                    parent=self
+                )
 
                 # don't set __dict__ if they can use any key
                 self._children[key] = field
@@ -29,15 +35,18 @@ class WildcardDictNode(DictNode):
                     description=explanation
                 )
 
-    def _as_dict(self):
+    def _as_dict(self, redact=False):
+        if redact and self._should_redact():
+            return self._as_redacted_dict()
+
         d = {}
         for group_name in self._children.keys():
-            d[group_name] = self[group_name]._as_dict()
+            d[group_name] = self[group_name]._as_dict(redact=redact)
 
         if self._errors:
             d['errors'] = [x.as_dict() for x in self._errors]
 
-        d.update(self._as_dict_to_inject())
+        d.update(self._as_dict_to_inject(redact=redact))
 
         return d
 
@@ -89,8 +98,7 @@ class PositiveIntegerNode(IntegerNode):
     """A node that must validate as a positive integer"""
     def _validate_value(self):
         if self._value < 0:
-            description = "{value} must be a positive integer".format(value=self._value)
-            self._add_error(title="Invalid Value", description=description)
+            self._add_error(title="Invalid Value", description="Must be a positive integer")
 
 
 class TypelessNode(AbstractNode):

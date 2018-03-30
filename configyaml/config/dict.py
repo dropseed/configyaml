@@ -16,7 +16,14 @@ class DictNode(AbstractNode):
             if key in self._dict_fields:
                 # get class for key
                 field_class = self._dict_fields[key]['class']
-                field = field_class(value=self._value[key], value_node=self._find_node_for_key_value(key), context=self._context, key=key, parent=self)
+                field = field_class(
+                    value=self._value[key],
+                    value_node=self._find_node_for_key_value(key),
+                    context=self._context,
+                    variables=self._variables,
+                    key=key,
+                    parent=self
+                )
 
                 # set self.FIELD_NAME so we can get children directly
                 # these will only be keys we specify, so should be safe names
@@ -43,7 +50,13 @@ class DictNode(AbstractNode):
         for k, v in self._dict_fields.items():
             if 'default' in v:
                 default = v['default']
-                instance = v['class'](value=default, context=self._context, key=k, parent=self)
+                instance = v['class'](
+                    value=default,
+                    context=self._context,
+                    variables=self._variables,
+                    key=k,
+                    parent=self
+                )
                 self.__dict__[k] = instance
                 self._children[k] = instance
 
@@ -78,14 +91,17 @@ class DictNode(AbstractNode):
     def __len__(self):
         return len(self._children)
 
-    def _as_dict(self):
+    def _as_dict(self, redact=False):
+        if redact and self._should_redact():
+            return self._as_redacted_dict()
+
         d = {}
         for k in self._dict_fields.keys():
-            d[k] = self[k]._as_dict()
+            d[k] = self[k]._as_dict(redact=redact)
 
         if self._errors:
             d['errors'] = [x.as_dict() for x in self._errors]
 
-        d.update(self._as_dict_to_inject())
+        d.update(self._as_dict_to_inject(redact=redact))
 
         return d

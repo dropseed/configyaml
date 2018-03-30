@@ -7,14 +7,15 @@ from .errors import ConfigError
 class ConfigLoader(object):
     config_root_class = None
 
-    def __init__(self, config_text, context={}, *args, **kwargs):
+    def __init__(self, config_text, context={}, variables={}):
         if not self.config_root_class:
             raise AttributeError('config_root_class must defined in subclasses of ConfigLoader')
 
         self.config_text = config_text
         self.config_dict = None
         self.config_root = None
-        self.variable_context = context
+        self.context = context
+        self.variables = variables
 
         self._errors = []
         self.load()
@@ -46,7 +47,12 @@ class ConfigLoader(object):
             # we have valid yaml with data, so start checking the components
             node_tree = yaml.compose(self.config_text)
             # give it the parsed settings, and the node info
-            self.config_root = self.config_root_class(value=self.config_dict, value_node=node_tree, context=self.variable_context)
+            self.config_root = self.config_root_class(
+                value=self.config_dict,
+                value_node=node_tree,
+                context=self.context,
+                variables=self.variables,
+            )
 
     @property
     def errors(self):
@@ -62,10 +68,10 @@ class ConfigLoader(object):
         # just pass off as dict right now
         return self.config_dict[key]
 
-    def as_dict(self):
+    def as_dict(self, redact=False):
         d = {
             'config_text': self.config_text,
-            'config': self.config_root._as_dict() if self.config_root else None,
+            'config': self.config_root._as_dict(redact=redact) if self.config_root else None,
         }
         if self.errors:
             d['errors'] = [x.as_dict() for x in self.errors]

@@ -27,13 +27,27 @@ class ListNode(AbstractNode):
 
         for index, item in enumerate(self._value):
             field_class = self._list_item_class
-            field = field_class(value=item, value_node=self._find_node_for_list_index(index), context=self._context, parent=self, key=index)
+            field = field_class(
+                value=item,
+                value_node=self._find_node_for_list_index(index),
+                context=self._context,
+                variables=self._variables,
+                parent=self,
+                key=index
+            )
 
             self._children.append(field)
 
     def _find_node_for_list_index(self, index):
         if not self._value_node:
             return None
+
+        if not isinstance(self._value_node, self._type):
+            # the original node was not a list
+            # - could have been a variable string
+            #
+            # return the original node so that the yaml text can place the error there
+            return self._value_node
 
         return self._value_node.value[index]
 
@@ -43,13 +57,16 @@ class ListNode(AbstractNode):
     def __len__(self):
         return len(self._children)
 
-    def _as_dict(self):
+    def _as_dict(self, redact=False):
+        if redact and self._should_redact():
+            return self._as_redacted_dict()
+
         d = {
-            'items': [x._as_dict() for x in self._children],
+            'items': [x._as_dict(redact=redact) for x in self._children],
         }
 
         if self._errors:
             d['errors'] = [x.as_dict() for x in self._errors]
 
-        d.update(self._as_dict_to_inject())
+        d.update(self._as_dict_to_inject(redact=redact))
         return d
