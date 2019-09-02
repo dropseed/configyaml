@@ -1,7 +1,8 @@
 #!/bin/sh
 # run from project root as `source scripts/bootstrap.sh`
-virtualenv env
+virtualenv env --python=python2
 . env/bin/activate
+pip install -U pip
 pip install -r requirements_dev.txt
 pip install -r requirements_test.txt
 pip install -e .
