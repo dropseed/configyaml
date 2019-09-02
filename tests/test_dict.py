@@ -132,3 +132,12 @@ def test_default_none():
     config = DummyConfigDefaultNone(value=value)
     assert config.is_valid()
     assert config.foo._value == 'bar'
+
+
+def test_required_as_dict():
+    """Threw a KeyError at one point"""
+    value = {}
+    config = DummyConfigRequired(value=value)
+    assert not config.is_valid()
+    assert config._errors[0].title == 'Required field is missing'
+    assert config._as_dict() == {'foo': None, 'errors': [{'title': 'Required field is missing', 'description': 'foo is a required field', 'start_line': None, 'start_column': None, 'end_line': None, 'end_column': None}]}

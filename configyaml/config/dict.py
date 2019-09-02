@@ -85,6 +85,9 @@ class DictNode(AbstractNode):
 
         return None
 
+    def get(self, key, default):
+        return self._children.get(key, default)
+
     def __getitem__(self, key):
         return self._children[key]
 
@@ -97,7 +100,11 @@ class DictNode(AbstractNode):
 
         d = {}
         for k in self._dict_fields.keys():
-            d[k] = self[k]._as_dict(redact=redact)
+            child = self.get(k, None)
+            if child:
+                d[k] = child._as_dict(redact=redact)
+            else:
+                d[k] = None
 
         if self._errors:
             d['errors'] = [x.as_dict() for x in self._errors]
