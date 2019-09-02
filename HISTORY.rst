@@ -2,7 +2,7 @@
 History
 =======
 
-0.5.2 (unreleased)
+0.5.2 (2019-09-02)
 ------------------
 
 * Fix KeyError when using as_dict() with a missing required dict field
