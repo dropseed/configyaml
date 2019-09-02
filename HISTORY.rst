@@ -5,7 +5,7 @@ History
 0.5.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+* Fix KeyError when using as_dict() with a missing required dict field
 
 
 0.5.1 (2018-03-30)
